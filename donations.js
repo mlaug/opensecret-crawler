@@ -7,7 +7,7 @@ const output = {}
 
 const add = (id, year, col, data) => {
   output[id] = output[id] || {id}
-  output[id][col.concat(year.substr(-2))] = isNaN(data) ? data : data / 100
+  output[id][col.concat(year.substr(-2))] = isNaN(data) ? data : data
 }
 
 const searchData = []
@@ -40,7 +40,7 @@ const csvStream = csv({delimiter: '\t'})
               return (donation.Category === "Money to Candidates" || donation.Category === "Money to Parties")
                 && donation.Recipient.includes('(D)')
             }).reduce((sum, donation) => {
-              return sum += parseInt(donation.Amount.replace(/\D+/g, ''));
+              return sum += parseInt(donation.Amount.replace(/[$,]/g, ''));
             }, 0));
 
             // R
@@ -48,13 +48,13 @@ const csvStream = csv({delimiter: '\t'})
               return (donation.Category === "Money to Candidates" || donation.Category === "Money to Parties")
                 && donation.Recipient.includes('(R)')
             }).reduce((sum, donation) => {
-              return sum += parseInt(donation.Amount.replace(/\D+/g, ''));
+              return sum += parseInt(donation.Amount.replace(/[$,]/g, ''));
             }, 0));
 
             // UN
             add(id, year, 'UN', tables[0].filter((donation) => donation.Category === "Money to PACs")
               .reduce((sum, donation) => {
-                return sum += parseInt(donation.Amount.replace(/\D+/g, ''));
+                return sum += parseInt(donation.Amount.replace(/[$,]/g, ''));
               }, 0));
           }
 

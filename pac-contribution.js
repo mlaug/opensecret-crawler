@@ -25,9 +25,9 @@ ids.map((id) => {
          add(id, year, 'PAC_REP', 0)
        }
        else {
-         add(id, year, 'PACTOT', tables[1][0][1])
-         add(id, year, 'PAC_DEM', distribution[2])
-         add(id, year, 'PAC_REP', distribution[3])
+         add(id, year, 'PACTOT', parseInt(tables[1][0][1].replace(/\D+/g, '')))
+         add(id, year, 'PAC_DEM', parseInt(distribution[2].replace(/\D+/g, '')))
+         add(id, year, 'PAC_REP', parseInt(distribution[3].replace(/\D+/g, '')))
        }
      }
      else {
